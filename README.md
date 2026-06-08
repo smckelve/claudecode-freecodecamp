@@ -38,7 +38,7 @@ for member in members:
 
 ### `main`
 
-Entry point placeholder:
+Prints a greeting, then lists the first members from `members.csv` via `read_members`:
 
 ```sh
 uv run main.py

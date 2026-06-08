@@ -5,26 +5,18 @@ def read_members(path="members.csv", limit=10):
     """Read member records from a CSV file.
 
     Args:
-        path: Path to a CSV file with "first_name", "last_name", and
-            "email" columns.
+        path: Path to a CSV file. Each row's columns become dict keys.
         limit: Maximum number of records to return.
 
     Returns:
-        A list of dicts, each with "first_name", "last_name", and "email" keys.
+        A list of dicts, one per row, mapping each column name to its value.
 
     Raises:
         FileNotFoundError: If `path` does not exist.
     """
     with open(path, newline="") as file:
         reader = csv.DictReader(file)
-        return [
-            {
-                "first_name": row["first_name"],
-                "last_name": row["last_name"],
-                "email": row["email"],
-            }
-            for _, row in zip(range(limit), reader)
-        ]
+        return [dict(row) for _, row in zip(range(limit), reader)]
 
 
 def main():

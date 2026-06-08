@@ -14,7 +14,9 @@ uv sync
 
 ### `read_members`
 
-Reads member records (`first_name`, `last_name`, `email`) from a CSV file.
+Reads member records from a CSV file. `members.csv` has columns `id`,
+`first_name`, `last_name`, `email`, `gender`, `ip_address`, `member_id`,
+`age`, `country`, `postal_code`, `favorite_color`, and `membership_status`.
 
 Run it from the command line — prints the first 10 members from `members.csv`:
 
@@ -29,11 +31,11 @@ from read_members import read_members
 
 members = read_members("members.csv", limit=5)
 for member in members:
-    print(member["first_name"], member["last_name"], member["email"])
+    print(member["first_name"], member["last_name"], member["country"])
 ```
 
-`read_members(path="members.csv", limit=10)` returns a list of dicts with
-`"first_name"`, `"last_name"`, and `"email"` keys, and raises
+`read_members(path="members.csv", limit=10)` returns a list of dicts, one per
+row, mapping each CSV column name to its value, and raises
 `FileNotFoundError` if `path` does not exist.
 
 ### `main`

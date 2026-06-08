@@ -18,6 +18,14 @@ This project is type-hinted and checked with [mypy](https://mypy-lang.org/) in s
 uv run mypy main.py read_members.py
 ```
 
+## Tests
+
+Tests are written with [pytest](https://docs.pytest.org/):
+
+```sh
+uv run pytest
+```
+
 ## Usage
 
 ### `read_members`
@@ -32,7 +40,17 @@ Run it from the command line — prints the first 10 members from `members.csv`:
 uv run read_members.py
 ```
 
-Or import it as a function in your own code:
+Command-line options:
+
+```sh
+uv run read_members.py --path members.csv --limit 25 --search ada
+```
+
+- `--path`: path to the CSV file (default: `members.csv`)
+- `--limit`: maximum number of records to read (default: `10`)
+- `--search`: only show members whose `first_name`, `last_name`, or `email` contains this substring (case-insensitive)
+
+Or import the functions in your own code:
 
 ```python
 from read_members import read_members
@@ -45,6 +63,10 @@ for member in members:
 `read_members(path="members.csv", limit=10)` returns a list of dicts, one per
 row, mapping each CSV column name to its value, and raises
 `FileNotFoundError` if `path` does not exist.
+
+`search_members(members, query)` filters a list of member dicts (as returned
+by `read_members`) down to those whose `first_name`, `last_name`, or `email`
+contains `query`, matching case-insensitively.
 
 ### `main`
 

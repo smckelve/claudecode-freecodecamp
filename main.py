@@ -1,14 +1,17 @@
-from read_members import read_members
+from read_members import format_members_table, read_members
 
 
 def main() -> None:
     """Print a greeting, then list the first members from members.csv."""
     print("Hello from claudecode-freecodecamp!")
     try:
-        for member in read_members():
-            print(member["first_name"], member["last_name"], member["email"])
+        members = read_members()
     except FileNotFoundError:
         print("Error: members.csv file not found.")
+        return
+
+    if members:
+        print(format_members_table(members))
 
 
 if __name__ == "__main__":

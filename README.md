@@ -68,6 +68,11 @@ row, mapping each CSV column name to its value, and raises
 by `read_members`) down to those whose `first_name`, `last_name`, or `email`
 contains `query`, matching case-insensitively.
 
+`format_members_table(members, fields=("first_name", "last_name", "email"))`
+formats member dicts as an aligned table (header row, separator, and one row
+per member, with each column padded to its widest value) and returns it as a
+string. Both `read_members.py` and `main.py` print members this way.
+
 ### `main`
 
 Prints a greeting, then lists the first members from `members.csv` via `read_members`:

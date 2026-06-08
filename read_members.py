@@ -40,6 +40,33 @@ def search_members(members: list[dict[str, str]], query: str) -> list[dict[str, 
     ]
 
 
+def format_members_table(
+    members: list[dict[str, str]],
+    fields: tuple[str, ...] = ("first_name", "last_name", "email"),
+) -> str:
+    """Format members as an aligned table with a header row.
+
+    Args:
+        members: Member records as returned by `read_members`.
+        fields: Which columns to include, and in what order.
+
+    Returns:
+        A multi-line string with a header row, separator, and one row per member.
+        Each column is left-aligned and padded to the width of its longest value.
+    """
+    headers = [field.replace("_", " ").title() for field in fields]
+    rows = [[member.get(field, "") for field in fields] for member in members]
+    widths = [max([len(header)] + [len(row[i]) for row in rows]) for i, header in enumerate(headers)]
+
+    def format_row(values: list[str]) -> str:
+        padded = [value.ljust(width) for value, width in zip(values[:-1], widths[:-1])]
+        return "  ".join(padded + [values[-1]])
+
+    lines = [format_row(headers), "  ".join("-" * width for width in widths)]
+    lines.extend(format_row(row) for row in rows)
+    return "\n".join(lines)
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Read and search member records from a CSV file.")
     parser.add_argument("--path", default="members.csv", help="Path to the CSV file (default: members.csv)")
@@ -59,8 +86,8 @@ def main() -> None:
     if args.search:
         members = search_members(members, args.search)
 
-    for member in members:
-        print(member["first_name"], member["last_name"], member["email"])
+    if members:
+        print(format_members_table(members))
 
 
 if __name__ == "__main__":

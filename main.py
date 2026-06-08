@@ -1,7 +1,7 @@
 from read_members import read_members
 
 
-def main():
+def main() -> None:
     """Print a greeting, then list the first members from members.csv."""
     print("Hello from claudecode-freecodecamp!")
     try:

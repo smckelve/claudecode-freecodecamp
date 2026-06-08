@@ -1,16 +1,39 @@
 import csv
-import itertools
 
-def read_members():
+
+def read_members(path="members.csv", limit=10):
+    """Read member records from a CSV file.
+
+    Args:
+        path: Path to a CSV file with "first_name", "last_name", and
+            "email" columns.
+        limit: Maximum number of records to return.
+
+    Returns:
+        A list of dicts, each with "first_name", "last_name", and "email" keys.
+
+    Raises:
+        FileNotFoundError: If `path` does not exist.
+    """
+    with open(path, newline="") as file:
+        reader = csv.DictReader(file)
+        return [
+            {
+                "first_name": row["first_name"],
+                "last_name": row["last_name"],
+                "email": row["email"],
+            }
+            for _, row in zip(range(limit), reader)
+        ]
+
+
+def main():
     try:
-        with open("members.csv", newline="") as file:
-            reader = csv.DictReader(file)
-            for row in itertools.islice(reader, 10):
-                print(row["first_name"], row["last_name"], row["email"])
+        for member in read_members():
+            print(member["first_name"], member["last_name"], member["email"])
     except FileNotFoundError:
         print("Error: members.csv file not found.")
-    except Exception:
-        print("Error: reading file: {e}")
-        
+
+
 if __name__ == "__main__":
-    read_members()
+    main()

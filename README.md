@@ -10,6 +10,14 @@ cd claudecode-freecodecamp
 uv sync
 ```
 
+## Type checking
+
+This project is type-hinted and checked with [mypy](https://mypy-lang.org/) in strict mode (configured in `pyproject.toml`):
+
+```sh
+uv run mypy main.py read_members.py
+```
+
 ## Usage
 
 ### `read_members`

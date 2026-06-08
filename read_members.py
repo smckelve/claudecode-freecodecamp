@@ -1,7 +1,7 @@
 import csv
 
 
-def read_members(path="members.csv", limit=10):
+def read_members(path: str = "members.csv", limit: int = 10) -> list[dict[str, str]]:
     """Read member records from a CSV file.
 
     Args:
@@ -19,7 +19,7 @@ def read_members(path="members.csv", limit=10):
         return [dict(row) for _, row in zip(range(limit), reader)]
 
 
-def main():
+def main() -> None:
     try:
         for member in read_members():
             print(member["first_name"], member["last_name"], member["email"])
